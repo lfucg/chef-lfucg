@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
     config.vm.boot_timeout = 120
 
     config.berkshelf.enabled = true
-    config.omnibus.chef_version = "12.19.26"
+    config.omnibus.chef_version = "12.19.36"
 
     #  You don’t need to get your code on your virtual machine because it is able to share folders with
     #  your host machine.  Your repo root should be in the directory that contains this Vagrantfile.
