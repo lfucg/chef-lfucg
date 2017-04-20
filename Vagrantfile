@@ -62,7 +62,8 @@ Vagrant.configure("2") do |config|
             }
         }
         chef.run_list = [
-            "recipe[chef-lfucg::system]"
+            "recipe[chef-lfucg::system]",
+            "recipe[chef-lfucg::server]"
         ]
     end
 end
