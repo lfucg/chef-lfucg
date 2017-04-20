@@ -20,14 +20,11 @@ virtualenv = "/home/#{user}/env"
 
 package "my packages" do
   package_name [
-    # Django
     "git",
+    "nginx",
     "libpq-dev",
-    "libffi-dev",
-    "libjpeg-dev",
-    "libmysqlclient-dev",
-    "mercurial",
-    "libxslt-dev"
+    "solr-jetty",
+    "redis-server"
   ]
   action :install
 end

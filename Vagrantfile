@@ -17,23 +17,22 @@ Vagrant.configure("2") do |config|
     # the line below is going to name your machine, this will help you find it when it is running on
     # your host machine.
     config.vm.hostname = "chef-lfucg"
-    config.vm.box = "bento/ubuntu-14.04"
+    config.vm.box = "ubuntu/trusty64"
 
     # the line below is going to determine which port your application will be forwarded to on your
     # host machine.  For example, if your application is using php and apache, apache will be using
     # port 80.  If you wanted to forward that to port 8000 on your host the line would look like:
     # config.vm.network :forwarded_port, guest: 80, host: 8000
-    config.vm.network :forwarded_port, guest: 8000, host: 8000
-    config.vm.network :forwarded_port, guest: 5555, host: 5555
+    config.vm.network :forwarded_port, guest: 80, host: 8000
     config.vm.network :public_network, bridge: "en1: Wi-Fi (AirPort)"
     config.vm.boot_timeout = 120
 
     config.berkshelf.enabled = true
-    config.omnibus.chef_version = "12.19.36"
+    config.omnibus.chef_version = "12.10.24"
 
     #  You don’t need to get your code on your virtual machine because it is able to share folders with
     #  your host machine.  Your repo root should be in the directory that contains this Vagrantfile.
-    config.vm.synced_folder "../", "/home/vagrant/chef-lfucg"
+    config.vm.synced_folder "../", "/home/vagrant/data-lexingtonky"
 
     # OSX needs this for concurrent open files
     config.vm.provision :shell, :inline => "ulimit -n 4048"
@@ -63,7 +62,7 @@ Vagrant.configure("2") do |config|
         }
         chef.run_list = [
             "recipe[chef-lfucg::system]",
-            "recipe[chef-lfucg::server]"
+            "recipe[chef-lfucg::ckan]"
         ]
     end
 end

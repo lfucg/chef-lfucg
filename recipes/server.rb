@@ -12,9 +12,8 @@ include_recipe "python::pip"
 package "apache2-dev"
 
 if Dir.exists? "/home/vagrant"
-    user = "vagrant"
-    domain = "localhost"
-    redirect_domain = ''
+  user = "vagrant"
+  domain = "localhost:8000"
 else
   user = "ubuntu"
   app = search("aws_opsworks_app").first
