@@ -21,5 +21,18 @@ postgresql_connection_info = {
 
 postgresql_database 'lfucg' do
   connection postgresql_connection_info
-  action :create
+  action [:drop, :create]
+end
+
+if Dir.exists? "/home/vagrant"
+  user = "vagrant"
+else
+  user = "ubuntu"
+end
+virtualenv = "/home/#{user}/env"
+
+bash "dbinit" do
+  user "#{user}"
+  code "#{virtualenv}/bin/paster --plugin=ckan db init -c config.ini"
+  cwd "/home/#{user}/data-lexingtonky/lfucg-ckan"
 end

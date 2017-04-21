@@ -21,7 +21,6 @@ virtualenv = "/home/#{user}/env"
 package "my packages" do
   package_name [
     "git",
-    "nginx",
     "libpq-dev",
     "solr-jetty",
     "redis-server"
@@ -36,4 +35,32 @@ python_virtualenv "#{virtualenv}" do
     group "#{user}"
     options "--no-site-packages"
     action :create
+end
+
+# Install CKAN to virtualenv
+python_pip "-e 'git+https://github.com/ckan/ckan.git@ckan-2.6.2#egg=ckan'" do
+    virtualenv "#{virtualenv}"
+    user "#{user}"
+    group "#{user}"
+end
+python_pip "--exists-action w -r #{virtualenv}/src/ckan/requirements.txt" do
+    virtualenv "#{virtualenv}"
+    user "#{user}"
+    group "#{user}"
+end
+
+# Setup Jetty
+cookbook_file "/etc/default/jetty" do
+  source 'jetty'
+end
+bash 'jetty schema' do
+    code <<-EOH
+    if [[ ! -L "/etc/solr/conf/schema.xml" ]]; then
+      sudo mv /etc/solr/conf/schema.xml /etc/solr/conf/schema.xml.bak
+      sudo ln -s #{virtualenv}/src/ckan/ckan/config/solr/schema.xml /etc/solr/conf/schema.xml
+    fi
+    EOH
+end
+service "jetty" do
+    action [ :restart ]
 end

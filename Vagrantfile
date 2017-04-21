@@ -20,10 +20,8 @@ Vagrant.configure("2") do |config|
     config.vm.box = "ubuntu/trusty64"
 
     # the line below is going to determine which port your application will be forwarded to on your
-    # host machine.  For example, if your application is using php and apache, apache will be using
-    # port 80.  If you wanted to forward that to port 8000 on your host the line would look like:
-    # config.vm.network :forwarded_port, guest: 80, host: 8000
-    config.vm.network :forwarded_port, guest: 80, host: 8000
+    # host machine.
+    config.vm.network :forwarded_port, guest: 5000, host: 8000
     config.vm.network :public_network, bridge: "en1: Wi-Fi (AirPort)"
     config.vm.boot_timeout = 120
 
@@ -62,7 +60,7 @@ Vagrant.configure("2") do |config|
         }
         chef.run_list = [
             "recipe[chef-lfucg::system]",
-            "recipe[chef-lfucg::ckan]"
+            "recipe[chef-lfucg::dev_database]"
         ]
     end
 end
