@@ -1,4 +1,4 @@
-<VirtualHost *:8080>
+<VirtualHost *:80>
     ServerName <%= @params[:server_name] %>
     ServerAlias *
 
@@ -21,6 +21,6 @@
 
 </VirtualHost>
 
-WSGIDaemonProcess ckan_default python-path=<%= @params[:docroot] %>:/home/<%= @params[:user] %>/env/lib<%= @params[:python] %>/site-packages
+WSGIDaemonProcess ckan_default python-path=<%= @params[:docroot] %>:/home/<%= @params[:user] %>/env/lib/python2.7/site-packages
 WSGIProcessGroup ckan_default
 WSGIScriptAlias / <%= @params[:docroot] %>/apache.wsgi
