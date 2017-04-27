@@ -11,37 +11,36 @@
 app = search("aws_opsworks_app").first
 config = app['environment']
 
-user = node['mobileserve']['user']
 git_ssh_key = "#{app['app_source']['ssh_key']}"
 git_url = "#{app['app_source']['url']}"
 git_revision = "#{app['app_source']['revision']}" ? "#{app['app_source']['revision']}" : "master"
 
 
 # Put the file on the node
-file "/home/#{user}/.ssh/id_rsa" do
-  owner "#{user}"
+file "/home/ubuntu/.ssh/id_rsa" do
+  owner "ubuntu"
   mode 0400
   content "#{git_ssh_key}"
 end
 
 # Create wrapper script to use for git-ssh
-file "/home/#{user}/git_wrapper.sh" do
-  owner "#{user}"
+file "/home/ubuntu/git_wrapper.sh" do
+  owner "ubuntu"
   mode 0755
-  content "#!/bin/sh\nexec ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"/home/#{user}/.ssh/id_rsa\" \"$@\""
+  content "#!/bin/sh\nexec ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"/home/ubuntu/.ssh/id_rsa\" \"$@\""
 end
 
-git "/home/#{user}/data-lexingtonky" do
+git "/home/ubuntu/data-lexingtonky" do
   repository "#{git_url}"
   reference "#{git_revision}" # branch
   action :sync
-  user "#{user}"
-  group "#{user}"
-  ssh_wrapper "/home/#{user}/git_wrapper.sh"
+  user "ubuntu"
+  group "ubuntu"
+  ssh_wrapper "/home/ubuntu/git_wrapper.sh"
 end
 
-template "/home/#{user}/data-lexingtonky/lfucg-ckan/config.ini" do
-  source "/home/#{user}/data-lexingtonky/lfucg-ckan/config.ini.erb"
+template "/home/ubuntu/data-lexingtonky/lfucg-ckan/config.ini" do
+  source "/home/ubuntu/data-lexingtonky/lfucg-ckan/config.ini.erb"
   local true
   mode 0644
   variables( :config => config )
