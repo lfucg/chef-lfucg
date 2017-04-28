@@ -31,8 +31,14 @@ else
 end
 virtualenv = "/home/#{user}/env"
 
-bash "dbinit" do
+bash "db clean" do
   user "#{user}"
-  code "#{virtualenv}/bin/paster --plugin=ckan db init -c config.ini"
+  code "#{virtualenv}/bin/paster --plugin=ckan db clean -c config.ini"
   cwd "/home/#{user}/data-lexingtonky/lfucg-ckan"
+end
+
+bash "db load" do
+  user "#{user}"
+  code "#{virtualenv}/bin/paster --plugin=ckan db load chef-lfucg/files/ckan_dev.sql  -c lfucg-ckan/config.ini"
+  cwd "/home/#{user}/data-lexingtonky"
 end
