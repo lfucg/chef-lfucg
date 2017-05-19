@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
 
     # the line below is going to determine which port your application will be forwarded to on your
     # host machine.
-    config.vm.network :forwarded_port, guest: 5000, host: 8000
+    config.vm.network :forwarded_port, guest: 8000, host: 8000
     config.vm.network :public_network, bridge: "en1: Wi-Fi (AirPort)"
     config.vm.boot_timeout = 120
 
