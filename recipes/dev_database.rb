@@ -42,3 +42,7 @@ bash "db load" do
   code "#{virtualenv}/bin/paster --plugin=ckan db load chef-lfucg/files/ckan_dev.sql  -c lfucg-ckan/config.ini"
   cwd "/home/#{user}/data-lexingtonky"
 end
+
+directory "/home/#{user}/uploads" do
+    mode 0777
+end

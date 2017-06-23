@@ -60,8 +60,7 @@ Vagrant.configure("2") do |config|
         }
         chef.run_list = [
             "recipe[chef-lfucg::system]",
-            "recipe[chef-lfucg::dev_database]",
-            "recipe[chef-lfucg::ckan]"
+            "recipe[chef-lfucg::dev_database]"
         ]
     end
 end
