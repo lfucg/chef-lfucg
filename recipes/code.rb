@@ -45,7 +45,3 @@ template "/home/ubuntu/data-lexingtonky/lfucg-ckan/config.ini" do
   mode 0644
   variables( :config => config )
 end
-
-service "apache2" do
-    action [ :restart ]
-end
