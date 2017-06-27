@@ -53,11 +53,13 @@ end
 cookbook_file "/etc/default/jetty" do
   source 'jetty'
 end
+
 bash 'jetty schema' do
     code <<-EOH
     if [[ ! -L "/etc/solr/conf/schema.xml" ]]; then
       sudo mv /etc/solr/conf/schema.xml /etc/solr/conf/schema.xml.bak
       sudo ln -s #{virtualenv}/src/ckan/ckan/config/solr/schema.xml /etc/solr/conf/schema.xml
+      sudo sed -i '/ROTATELOGS=\/usr\/sbin\/rotatelogs/c\ROTATELOGS=\/usr\/bin\/rotatelogs' /etc/init.d/jetty
     fi
     EOH
 end
