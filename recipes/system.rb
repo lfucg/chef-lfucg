@@ -59,10 +59,15 @@ bash 'jetty schema' do
     if [[ ! -L "/etc/solr/conf/schema.xml" ]]; then
       sudo mv /etc/solr/conf/schema.xml /etc/solr/conf/schema.xml.bak
       sudo ln -s #{virtualenv}/src/ckan/ckan/config/solr/schema.xml /etc/solr/conf/schema.xml
-      sudo sed -i '/ROTATELOGS=\/usr\/sbin\/rotatelogs/c\ROTATELOGS=\/usr\/bin\/rotatelogs' /etc/init.d/jetty
     fi
     EOH
 end
+
+# bash 'jetty config' do
+#   code "sudo sed -i '/ROTATELOGS=\/usr\/sbin\/rotatelogs/c\ROTATELOGS=\/usr\/bin\/rotatelogs' /etc/init.d/jetty"
+# end
+
 service "jetty" do
     action [ :restart ]
+    ignore_failure true
 end
