@@ -15,3 +15,6 @@ JETTY_HOST=127.0.0.1
 
 # The network port used by Jetty
 JETTY_PORT=8983
+
+# Overcomes bug in Ubuntu 14.04 jetty package
+ROTATELOGS=/usr/bin/rotatelogs
