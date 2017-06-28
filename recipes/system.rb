@@ -63,11 +63,6 @@ bash 'jetty schema' do
     EOH
 end
 
-# bash 'jetty config' do
-#   code "sudo sed -i '/ROTATELOGS=\/usr\/sbin\/rotatelogs/c\ROTATELOGS=\/usr\/bin\/rotatelogs' /etc/init.d/jetty"
-# end
-
 service "jetty" do
     action [ :restart ]
-    ignore_failure true
 end

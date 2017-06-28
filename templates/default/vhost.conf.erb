@@ -2,6 +2,12 @@
     ServerName <%= @params[:server_name] %>
     ServerAlias *
 
+    <% if !@params[:is_vagrant] %>
+    RewriteEngine On
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteCond %{REQUEST_URI} !/health
+    RewriteRule (.*) https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
+    <% end %>
     ServerAdmin elton@apaxsoftware.com
     DocumentRoot <%= @params[:docroot] %>
     ErrorLog ${APACHE_LOG_DIR}/error.log

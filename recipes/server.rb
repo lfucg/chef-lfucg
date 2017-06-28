@@ -41,7 +41,7 @@ web_app 'lfucg-ckan' do
   server_name "#{domain}"
   user "#{user}"
   docroot "/home/#{user}/data-lexingtonky/lfucg-ckan"
-  project 'lfucg-ckan'
+  is_vagrant Dir.exists?("/home/vagrant")
 end
 
 apache_site 'default' do
