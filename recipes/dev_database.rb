@@ -12,24 +12,23 @@ end.run_action(:run)
 include_recipe "postgresql::server"
 include_recipe "database::postgresql"
 
-postgresql_connection_info = {
-  :host => '127.0.0.1',
-  :port => '5432',
-  :username => 'postgres',
-  :password => 'password'
-}
-
-postgresql_database 'lfucg' do
-  connection postgresql_connection_info
-  action [:drop, :create]
-end
-
 if Dir.exists? "/home/vagrant"
   user = "vagrant"
 else
   user = "ubuntu"
 end
 virtualenv = "/home/#{user}/env"
+
+bash "drop db" do
+  user "#{user}"
+  code "PGPASSWORD=password psql -U postgres -h 127.0.0.1 -c 'drop database lfucg'"
+  ignore_failure true
+end
+
+bash "create db" do
+  user "#{user}"
+  code "PGPASSWORD=password psql -U postgres -h 127.0.0.1 -c 'create database lfucg'"
+end
 
 bash "db clean" do
   user "#{user}"

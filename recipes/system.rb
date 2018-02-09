@@ -49,6 +49,12 @@ python_pip "--exists-action w -r #{virtualenv}/src/ckan/requirements.txt" do
     group "#{user}"
 end
 
+bash "install theme" do
+  user "#{user}"
+  code "#{virtualenv}/bin/python setup.py develop"
+  cwd "/home/#{user}/data-lexingtonky/ckanext-ckantwo_theme"
+end
+
 # Setup Jetty
 cookbook_file "/etc/default/jetty" do
   source 'jetty'
